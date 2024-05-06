@@ -3,24 +3,27 @@
 # https://www.airgradient.com/open-airgradient/instructions/overview/
 
 substitutions:
-  name: "ag-open-air-o-1pst"
-  friendly_name: "AG Open Air O-1PST"
+  reboot_timeout: 1d
+  name: "ag-open-air"
+  friendly_name: "AG Open Air"
+  static_ip: '192.168.20.90'
   name_add_mac_suffix: "false"  # Must have quotes around value
 
 # Enable Home Assistant API
-api:  # Add encryption key as desired
+api:
+  encryption:
+    key: !secret api_encryption_key
 
-ota:  # Add password as desired
+ota:
   platform: esphome
-  # password:
-
-wifi:
+  password: !secret ota_password
 
 dashboard_import:
   package_import_url: github://MallocArray/airgradient_esphome/airgradient-open-air-o-1pst.yaml
   import_full_config: false
 
 packages:
+  wifi: !include common/wifi.yml
   board: github://MallocArray/airgradient_esphome/packages/airgradient_esp32-c3_board.yaml
   captive_portal: github://MallocArray/airgradient_esphome/packages/captive_portal.yaml
   pm_2.5: github://MallocArray/airgradient_esphome/packages/sensor_pms5003t.yaml
@@ -29,5 +32,5 @@ packages:
   tvoc: github://MallocArray/airgradient_esphome/packages/sensor_sgp41.yaml
   airgradient_api: github://MallocArray/airgradient_esphome/packages/airgradient_api_esp32-c3.yaml
   hardware_watchdog: github://MallocArray/airgradient_esphome/packages/watchdog.yaml
-  wifi: github://MallocArray/airgradient_esphome/packages/sensor_wifi.yaml
+  sensor_wifi: github://MallocArray/airgradient_esphome/packages/sensor_wifi.yaml
   uptime: github://MallocArray/airgradient_esphome/packages/sensor_uptime.yaml
