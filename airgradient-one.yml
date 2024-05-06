@@ -2,15 +2,20 @@
 # https://www.airgradient.com/open-airgradient/instructions/overview/
 
 substitutions:
+  reboot_timeout: 1d
   name: "ag-one"
   friendly_name: "AG One"
   config_version: 2.0.1
+  static_ip: '192.168.20.95'
   name_add_mac_suffix: "false"  # Must have quotes around value
 
 # Enable Home Assistant API
 api:  # Add encryption key as desired
+  encryption:
+    key: !secret api_encryption_key
 
 ota:  # Add password as desired
+  password: !secret ota_password
 
 wifi:
   # Enable fallback hotspot (captive portal) in case wifi connection fails
@@ -21,6 +26,7 @@ dashboard_import:
   import_full_config: false
 
 packages:
+  wifi: !include common/wifi.yml
   board: github://MallocArray/airgradient_esphome/packages/airgradient_esp32-c3_board.yaml
   pm_2.5: github://MallocArray/airgradient_esphome/packages/sensor_pms5003.yaml
   co2: github://MallocArray/airgradient_esphome/packages/sensor_s8.yaml
@@ -32,7 +38,7 @@ packages:
   airgradient_api: github://MallocArray/airgradient_esphome/packages/airgradient_api_esp32-c3.yaml
   hardware_watchdog: github://MallocArray/airgradient_esphome/packages/watchdog.yaml
   config_button: github://MallocArray/airgradient_esphome/packages/config_button.yaml
-  wifi: github://MallocArray/airgradient_esphome/packages/sensor_wifi.yaml
+  sensor_wifi: github://MallocArray/airgradient_esphome/packages/sensor_wifi.yaml
   uptime: github://MallocArray/airgradient_esphome/packages/sensor_uptime.yaml
   safe_mode: github://MallocArray/airgradient_esphome/packages/switch_safe_mode.yaml
 
